@@ -8,7 +8,7 @@ Celem projektu jest ćwiczenie analizy danych przy użyciu API do zdalnego serwe
  - danych dzień po dniu w formie szeregu czasowego.
 
 
-The goal of the project is to practice data analysis using an API to a remote server, loading, cleaning, and processing data, and saving it to CSV files. The project involves creating table structures in PostgreSQL, populating them with data, and creating views using data grouping and filtering on the server side(SQL). Another key aspect is creating interactive visualizations using DASH that will show relationships between delays and flight durations, seasons, precipitation, snow cover thickness, as well as displaying:
+The goal of the project is to practice data analysis using an API to a remote server, loading, cleaning, and processing data, and saving it to CSV files. The project involves creating table structures in PostgreSQL, populating them with data, and creating views using data grouping and filtering on the server side (SQL). Another key aspect is creating interactive visualizations using DASH that will show relationships between delays and flight durations, seasons, precipitation, snow cover thickness, as well as displaying:
 
 - The TOP 10 flight routes with the lowest delay percentages in a table format,
 - A comparison of the years 2019 and 2020 in the form of a bar chart:
