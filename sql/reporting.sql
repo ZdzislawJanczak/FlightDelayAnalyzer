@@ -13,7 +13,24 @@ Wskazówka:
 - SQL - analiza danych > Przygotowanie do zjazdu 2 > Widoki
 */
 CREATE OR REPLACE VIEW reporting.flight as
-SELECT 1
+SELECT 
+    flight_id,
+    flight_date,
+    airline_id,
+    origin_airport_id,
+    destination_airport_id,
+    scheduled_departure,
+    actual_departure,
+    dep_delay_new,
+    cancelled,
+    CASE
+        WHEN dep_delay_new > 0 THEN 1
+        ELSE 0
+    END AS is_delayed
+FROM
+    flights
+WHERE
+    cancelled = 0
 ;
 /*
 Tutaj napisz definicję widoku reporting.top_reliability_roads, która będzie zawierała następujące kolumny:
@@ -33,8 +50,64 @@ Wskazówka:
 - SQL - analiza danych > Dzień 1 Podstawy SQL > Aliasowanie
 - SQL - analiza danych > Dzień 1 Podstawy SQL > Podzapytania
 */
+
 CREATE OR REPLACE VIEW reporting.top_reliability_roads AS
-SELECT 1
+WITH flight_stats AS (
+    SELECT
+        origin_airport_id,
+        dest_airport_id,
+        EXTRACT(YEAR FROM flight_date) AS year,
+        COUNT(*) AS cnt,
+        AVG(CASE WHEN dep_delay_new > 0 THEN 1 ELSE 0 END) AS reliability
+    FROM
+        flights
+    WHERE
+        cancelled = 0
+    GROUP BY
+        origin_airport_id,
+        dest_airport_id,
+        EXTRACT(YEAR FROM flight_date)
+    HAVING
+        COUNT(*) > 10000
+),
+airport_names AS (
+    SELECT
+        airport_id,
+        airport_name
+    FROM
+        airports
+),
+ranked_stats AS (
+    SELECT
+        fs.origin_airport_id,
+        oa.airport_name AS origin_airport_name,
+        fs.dest_airport_id,
+        da.airport_name AS dest_airport_name,
+        fs.year,
+        fs.cnt,
+        fs.reliability,
+        RANK() OVER (PARTITION BY fs.year ORDER BY fs.reliability) AS nb
+    FROM
+        flight_stats fs
+    JOIN
+        airport_names oa ON fs.origin_airport_id = oa.airport_id
+    JOIN
+        airport_names da ON fs.dest_airport_id = da.airport_id
+)
+SELECT
+    origin_airport_id,
+    origin_airport_name,
+    dest_airport_id,
+    dest_airport_name,
+    year,
+    cnt,
+    reliability,
+    nb
+FROM
+    ranked_stats
+ORDER BY
+    year,
+    nb
 ;
 /*
 Tutaj napisz definicję widoku reporting.year_to_year_comparision, która będzie zawierał następujące kolumny:
