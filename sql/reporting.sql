@@ -15,31 +15,30 @@ Wskazówka:
 */
 CREATE OR REPLACE VIEW reporting.flight as
 SELECT
-	id
---	, to_date(concat("year", LPAD("month"::TEXT, 2, '0'), LPAD("day_of_month"::TEXT, 2, '0'))	, 'YYYYMMDD') AS flight_date
-	,"year"
-	,"month"
-	,day_of_month
-	,day_of_week
-	,op_unique_carrier
-	,tail_num
-	,op_carrier_fl_num
-	,origin_airport_id
-	,dest_airport_id
-	,dep_time
-	,dep_delay_new
-	,dep_time_blk
-	,crs_arr_time
-	,crs_elapsed_time
-	,crs_dep_time
-	,arr_time
-	,arr_delay_new
-	,arr_time_blk
-	,cancelled
-	,actual_elapsed_time
-	,distance
-	,distance_group
-	, CASE
+	id,
+	"year",
+	"month",
+	day_of_month,
+	day_of_week,
+	op_unique_carrier,
+	tail_num,
+	op_carrier_fl_num,
+	origin_airport_id,
+	dest_airport_id,
+	dep_time,
+	dep_delay_new,
+	dep_time_blk,
+	crs_arr_time,
+	crs_elapsed_time,
+	crs_dep_time,
+	arr_time,
+	arr_delay_new,
+	arr_time_blk,
+	cancelled,
+	actual_elapsed_time,
+	distance,
+	distance_group,
+	CASE
 		WHEN dep_delay_new > 0 THEN 1
 		ELSE 0
 	END AS is_delayed
@@ -48,7 +47,6 @@ FROM
 WHERE
 	cancelled = 0
 ;
-
 
 /*
 Tutaj napisz definicję widoku reporting.top_reliability_roads, która będzie zawierała następujące kolumny:
@@ -68,10 +66,10 @@ Wskazówka:
 - SQL - analiza danych > Dzień 1 Podstawy SQL > Aliasowanie
 - SQL - analiza danych > Dzień 1 Podstawy SQL > Podzapytania
 */
-
 CREATE OR REPLACE VIEW reporting.top_reliability_roads AS
-
+SELECT 1
 ;
+
 /*
 Tutaj napisz definicję widoku reporting.year_to_year_comparision, która będzie zawierał następujące kolumny:
 - `year`
@@ -82,6 +80,7 @@ Tutaj napisz definicję widoku reporting.year_to_year_comparision, która będzi
 CREATE OR REPLACE VIEW reporting.year_to_year_comparision AS
 SELECT 1
 ;
+
 /*
 Tutaj napisz definicję widoku reporting.day_to_day_comparision, który będzie zawierał następujące kolumny:
 - `year`
@@ -91,18 +90,18 @@ Tutaj napisz definicję widoku reporting.day_to_day_comparision, który będzie 
 CREATE OR REPLACE VIEW reporting.day_to_day_comparision AS
 SELECT 1
 ;
+
 /*
 Tutaj napisz definicję widoku reporting.day_by_day_reliability, ktory będzie zawierał następujące kolumny:
 - `date` jako złożenie kolumn `year`, `month`, `day`, powinna być typu `date`
 - `reliability` jako odsetek opóźnień danego dnia
-
 Wskazówki:
 - formaty dat w postgresql: [klik](https://www.postgresql.org/docs/13/functions-formatting.html),
 - jeśli chcesz dodać zera na początek liczby np. `1` > `01`, posłuż się metodą `LPAD`: [przykład](https://stackoverflow.com/questions/26379446/padding-zeros-to-the-left-in-postgresql),
 - do konwertowania ciągu znaków na datę najwygodniej w Postgres użyć `to_date`: [przykład](https://www.postgresqltutorial.com/postgresql-date-functions/postgresql-to_date/)
 - do złączenia kilku kolumn / wartości typu string, używa się operatora `||`, przykładowo: SELECT 'a' || 'b' as example
-
-Uwaga: Nie dodawaj tutaj na końcu `;` - przy używaniu split, pojawi się pusta kwerenda, co będzie skutkowało późniejszym błędem przy próbie wykonaniu skryptu z poziomu notatnika.
+Uwaga: Nie dodawaj tutaj na końcu `` - przy używaniu split, pojawi się pusta kwerenda, co będzie skutkowało późniejszym błędem przy próbie wykonaniu skryptu z poziomu notatnika.
 */
 CREATE OR REPLACE VIEW reporting.day_by_day_reliability AS
+/*, to_date(concat("year", LPAD("month"::TEXT, 2, '0'), LPAD("day_of_month"::TEXT, 2, '0'))	, 'YYYYMMDD') AS flight_date*/
 SELECT 1
