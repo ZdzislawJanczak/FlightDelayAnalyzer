@@ -16,7 +16,10 @@ Wskazówka:
 CREATE OR REPLACE VIEW reporting.flight as
 SELECT
 	id
-	, to_date(concat("year", LPAD("month"::TEXT, 2, '0'), LPAD("day_of_month"::TEXT, 2, '0'))	, 'YYYYMMDD') AS flight_date
+--	, to_date(concat("year", LPAD("month"::TEXT, 2, '0'), LPAD("day_of_month"::TEXT, 2, '0'))	, 'YYYYMMDD') AS flight_date
+	,"year"
+	,"month"
+	,day_of_month
 	,day_of_week
 	,op_unique_carrier
 	,tail_num
