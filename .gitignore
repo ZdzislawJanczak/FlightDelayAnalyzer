@@ -1,5 +1,5 @@
 # Ignore virtual environment
-.venv/
+venv/
 
 # Ignore all files in data except airports.csv and readme.txt
 data/*
